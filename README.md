@@ -1,24 +1,53 @@
 # stacklite
 
-The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Nine slash commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect — as plain markdown files for Claude Code.
+The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Nine commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect — as plain markdown files for your AI coding IDE.
 
-No binaries. No bun runtime. No telemetry. Just `.claude/commands/*.md`.
+No binaries. No runtime. No telemetry. Just markdown.
 
-## Install — 10 seconds
+## Supported IDEs
+
+| IDE | Location | How to invoke |
+|-----|----------|---------------|
+| **Claude Code** | `.claude/commands/*.md` | Type `/` in chat |
+| **VS Code Copilot** | `.github/prompts/*.prompt.md` | Type `#` or `/` in Copilot Chat |
+| **Cursor** | `.cursor/rules/*.mdc` | Auto-attached by agent or `@Rules` |
+| **Windsurf** | `.windsurf/rules/*.md` | Auto-attached by Cascade |
+
+## Install
+
+### Option 1: Copy the files
+
+Clone this repo, then copy the folder for your IDE into your project:
 
 ```bash
 git clone https://github.com/oluoyefeso/stacklite.git /tmp/stacklite
-cd /tmp/stacklite && bash install.sh /path/to/your/project
 ```
 
-Or just copy the files:
-
+**Claude Code:**
 ```bash
-mkdir -p .claude/commands
-cp stacklite/commands/*.md .claude/commands/
+cp -r /tmp/stacklite/targets/claude-code/.claude .
 ```
 
-Then in Claude Code, type `/` and you'll see them all.
+**VS Code Copilot:**
+```bash
+cp -r /tmp/stacklite/targets/copilot/.github .
+```
+
+**Cursor:**
+```bash
+cp -r /tmp/stacklite/targets/cursor/.cursor .
+```
+
+**Windsurf:**
+```bash
+cp -r /tmp/stacklite/targets/windsurf/.windsurf .
+```
+
+### Option 2: Ask your AI
+
+Paste this into Claude Code, Cursor, or any AI coding assistant:
+
+> Clone https://github.com/oluoyefeso/stacklite.git to /tmp/stacklite and copy the appropriate target files into my project. Detect which IDE we're in and pick the right target folder.
 
 ## Commands
 
@@ -91,7 +120,7 @@ These are plain markdown files. Edit them for your team:
 - Add your own forcing questions to `/plan`
 - Change engineering preferences to match your style
 
-## Optional: routing rules
+## Optional: routing rules (Claude Code)
 
 Copy the routing section from `CLAUDE.md.example` into your project's `CLAUDE.md` so Claude Code knows when to suggest which command.
 
