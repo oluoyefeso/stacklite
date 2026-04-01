@@ -7,7 +7,7 @@ No binaries. No bun runtime. No telemetry. Just `.claude/commands/*.md`.
 ## Install — 10 seconds
 
 ```bash
-git clone https://github.com/YOUR_USER/stacklite.git /tmp/stacklite
+git clone https://github.com/oluoyefeso/stacklite.git /tmp/stacklite
 cd /tmp/stacklite && bash install.sh /path/to/your/project
 ```
 
