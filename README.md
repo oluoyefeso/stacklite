@@ -15,39 +15,42 @@ No binaries. No runtime. No telemetry. Just markdown.
 
 ## Install
 
-### Option 1: Copy the files
+### Option 1: Ask your AI
 
-Clone this repo, then copy the folder for your IDE into your project:
+Paste this into your AI coding assistant (Claude Code, Cursor, Copilot, Windsurf, or any IDE with an AI agent):
+
+> Install stacklite into this project. Clone https://github.com/oluoyefeso/stacklite.git to /tmp/stacklite. Detect which IDE I'm using by checking which of these directories exist in my project: .claude/, .github/, .cursor/, .windsurf/. If none exist, ask me which IDE I use. Then copy the matching target folder:
+>
+> - Claude Code: `cp -r /tmp/stacklite/targets/claude-code/.claude .`
+> - VS Code Copilot: `cp -r /tmp/stacklite/targets/copilot/.github .`
+> - Cursor: `cp -r /tmp/stacklite/targets/cursor/.cursor .`
+> - Windsurf: `cp -r /tmp/stacklite/targets/windsurf/.windsurf .`
+>
+> After copying, list the commands that were installed and briefly explain each one. Clean up with `rm -rf /tmp/stacklite`.
+
+That's it. Your AI agent handles the rest.
+
+### Option 2: Copy the files manually
 
 ```bash
 git clone https://github.com/oluoyefeso/stacklite.git /tmp/stacklite
 ```
 
-**Claude Code:**
+Then copy the folder for your IDE:
+
 ```bash
+# Claude Code
 cp -r /tmp/stacklite/targets/claude-code/.claude .
-```
 
-**VS Code Copilot:**
-```bash
+# VS Code Copilot
 cp -r /tmp/stacklite/targets/copilot/.github .
-```
 
-**Cursor:**
-```bash
+# Cursor
 cp -r /tmp/stacklite/targets/cursor/.cursor .
-```
 
-**Windsurf:**
-```bash
+# Windsurf
 cp -r /tmp/stacklite/targets/windsurf/.windsurf .
 ```
-
-### Option 2: Ask your AI
-
-Paste this into Claude Code, Cursor, or any AI coding assistant:
-
-> Clone https://github.com/oluoyefeso/stacklite.git to /tmp/stacklite and copy the appropriate target files into my project. Detect which IDE we're in and pick the right target folder.
 
 ## Commands
 
