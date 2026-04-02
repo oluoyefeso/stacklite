@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.0.0] - 2026-04-02
+
+**Breaking change:** All commands renamed with `sl-` prefix to avoid clashing with IDE built-in commands (e.g., Claude Code's `/plan` mode).
+
+### Changed
+
+- `/plan` → `/sl-plan`, `/review` → `/sl-review`, `/ship` → `/sl-ship`, and all other commands now prefixed with `sl-`.
+- All cross-references between commands updated.
+- README updated with new command names and upgrade instructions.
+
+### Migration
+
+Delete old command files from your project and re-copy from the matching target folder.
+
 ## [2.0.0] - 2026-04-02
 
 Every command now tells you what to run next. The sprint cycle is a connected loop, not a list of independent tools.
