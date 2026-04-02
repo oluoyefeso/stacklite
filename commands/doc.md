@@ -111,3 +111,7 @@ TODOS: [N items completed, M items added]
 ```
 
 If no updates needed: "Documentation is current — no updates needed."
+
+## Next Step
+
+Run `/retro` at the end of the week to reflect on what was shipped.
