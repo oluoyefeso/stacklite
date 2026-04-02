@@ -4,12 +4,12 @@ When the user's request matches an available command, invoke it as your FIRST ac
 The command has specialized workflows that produce better results than ad-hoc answers.
 
 Routing rules:
-- Product ideas, "is this worth building", brainstorming → `/plan`
-- Architecture review, "lock in the plan" → `/eng-review`
-- Code review, "check my diff", pre-landing review → `/review`
-- Security audit, "check for vulnerabilities" → `/secure`
-- Performance review, "check for perf issues" → `/perf`
-- Ship, deploy, push, create PR → `/ship`
-- Bugs, errors, "why is this broken" → `/investigate`
-- Weekly retro, "what did we ship" → `/retro`
-- Update docs after shipping → `/doc`
+- Product ideas, "is this worth building", brainstorming → `/sl-plan`
+- Architecture review, "lock in the plan" → `/sl-eng-review`
+- Code review, "check my diff", pre-landing review → `/sl-review`
+- Security audit, "check for vulnerabilities" → `/sl-secure`
+- Performance review, "check for perf issues" → `/sl-perf`
+- Ship, deploy, push, create PR → `/sl-ship`
+- Bugs, errors, "why is this broken" → `/sl-investigate`
+- Weekly retro, "what did we ship" → `/sl-retro`
+- Update docs after shipping → `/sl-doc`
