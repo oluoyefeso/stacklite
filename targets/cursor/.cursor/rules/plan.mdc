@@ -217,8 +217,8 @@ Branch: {branch}
 
 ---
 
-## Phase 7: Review Chaining
+## Next Step
 
 After the design doc, suggest next steps:
-- "Run `/eng-review` to lock in the architecture and test plan before implementation."
-- "Run `/secure` if this touches auth, payments, or user data."
+- Run `/eng-review` to lock in the architecture and test plan before implementation.
+- Run `/secure` if this touches auth, payments, or user data.

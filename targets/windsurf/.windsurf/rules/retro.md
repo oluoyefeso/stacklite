@@ -178,3 +178,7 @@ Top win: {biggest accomplishment}
 Top risk: {biggest concern}
 Next week: {1-sentence focus recommendation}
 ```
+
+## Next Step
+
+Start the next cycle with `/plan` for the highest-priority item from the retro.
