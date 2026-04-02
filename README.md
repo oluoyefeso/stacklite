@@ -132,7 +132,17 @@ All command files use the `sl-` prefix (e.g., `sl-plan.md`, `sl-review.md`).
 
 ## Upgrading from v2
 
-v3 renamed all commands with an `sl-` prefix to avoid clashing with IDE built-in commands (e.g., Claude Code's `/plan` mode). Delete the old command files from your project and re-copy from the matching target folder.
+v3 renamed all commands with an `sl-` prefix to avoid clashing with IDE built-in commands (e.g., Claude Code's `/plan` mode). Delete the old command files from your project, then re-copy from the matching target folder.
+
+```bash
+# Remove old un-prefixed commands (run whichever applies to your IDE)
+rm -f .claude/commands/{plan,eng-review,review,secure,perf,ship,investigate,retro,doc}.md
+rm -f .github/prompts/{plan,eng-review,review,secure,perf,ship,investigate,retro,doc}.prompt.md
+rm -f .cursor/rules/{plan,eng-review,review,secure,perf,ship,investigate,retro,doc}.mdc
+rm -f .windsurf/rules/{plan,eng-review,review,secure,perf,ship,investigate,retro,doc}.md
+```
+
+Then re-copy from the matching target folder (see Install above).
 
 ## Customise
 
