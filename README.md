@@ -74,13 +74,15 @@ Paste this into Claude Code, Cursor, or any AI coding assistant:
 
 ## The Sprint
 
-stacklite follows a natural process:
+stacklite follows a natural process. Each command suggests the next one when it finishes:
 
 ```
 /plan → /eng-review → [build] → /review + /secure + /perf → /ship → /doc → /retro
+  ↑                                                                            │
+  └────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Each command feeds the next. `/plan` produces a design doc that `/eng-review` reviews. `/review` catches bugs that `/ship` verifies are fixed. `/doc` updates what `/ship` changed. `/retro` reflects on what was shipped.
+Each command feeds the next. `/plan` produces a design doc that `/eng-review` reviews. `/review` catches bugs that `/ship` verifies are fixed. `/doc` updates what `/ship` changed. `/retro` reflects on what was shipped and suggests what to `/plan` next.
 
 ## What's included vs gstack
 
@@ -111,6 +113,17 @@ Each command feeds the next. `/plan` produces a design doc that `/eng-review` re
 - Context recovery after compaction
 - GStack persona/voice branding
 - Contributor mode
+
+## Contributing
+
+The canonical source for each command lives in `commands/`. The IDE-specific copies in `targets/` are manually synced with frontmatter appropriate for each IDE. When editing a command:
+
+1. Edit the canonical file in `commands/`
+2. Copy the change to all 4 target directories:
+   - `targets/claude-code/.claude/commands/` (no frontmatter)
+   - `targets/copilot/.github/prompts/` (has `mode` + `description` frontmatter)
+   - `targets/cursor/.cursor/rules/` (has `description` + `alwaysApply` frontmatter)
+   - `targets/windsurf/.windsurf/rules/` (has `trigger` + `description` frontmatter)
 
 ## Customise
 
