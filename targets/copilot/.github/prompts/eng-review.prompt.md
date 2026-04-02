@@ -146,5 +146,8 @@ Code Quality:  X issues found, Y resolved
 Tests:         Coverage X% → Y% (Z gaps remain)
 Performance:   X issues found, Y resolved
 STATUS: CLEARED / NOT CLEARED
-[Next steps]
 ```
+
+## Next Step
+
+Run `/review` when implementation is complete to catch structural issues in the actual diff. Or `/secure` and `/perf` for deeper security and performance checks.

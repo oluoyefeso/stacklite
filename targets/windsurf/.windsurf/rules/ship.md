@@ -164,3 +164,7 @@ git add -A && git commit -m "docs: sync with shipped changes" && git push
 - Never force push.
 - Never ask for trivial confirmations.
 - The goal: user says `/ship`, next thing they see is the PR URL.
+
+## Next Step
+
+Run `/doc` to update documentation after shipping. Then `/retro` at the end of the week to reflect on what was shipped.
