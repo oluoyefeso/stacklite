@@ -8,10 +8,10 @@ No binaries. No runtime. No telemetry. Just markdown.
 
 | IDE | Location | How to invoke |
 |-----|----------|---------------|
-| **Claude Code** | `.claude/commands/*.md` | Type `/` in chat |
-| **VS Code Copilot** | `.github/prompts/*.prompt.md` | Type `#` or `/` in Copilot Chat |
-| **Cursor** | `.cursor/rules/*.mdc` | Auto-attached by agent or `@Rules` |
-| **Windsurf** | `.windsurf/rules/*.md` | Auto-attached by Cascade |
+| **Claude Code** | `.claude/commands/sl-*.md` | Type `/sl-` in chat |
+| **VS Code Copilot** | `.github/prompts/sl-*.prompt.md` | Type `#` or `/` in Copilot Chat |
+| **Cursor** | `.cursor/rules/sl-*.mdc` | Auto-attached by agent or `@Rules` |
+| **Windsurf** | `.windsurf/rules/sl-*.md` | Auto-attached by Cascade |
 
 ## Install
 
@@ -57,35 +57,35 @@ cp -r /tmp/stacklite/targets/windsurf/.windsurf .
 ### Think + Plan
 | Command | What it does |
 |---------|-------------|
-| `/plan` | Product thinking before code. Six forcing questions for startups, design partner mode for side projects. Premise challenge, alternatives generation, design doc output. |
-| `/eng-review` | Architecture, code quality, tests, performance review of a plan. Scope challenge, ASCII coverage diagrams, interactive section-by-section walkthrough. |
+| `/sl-plan` | Product thinking before code. Six forcing questions for startups, design partner mode for side projects. Premise challenge, alternatives generation, design doc output. |
+| `/sl-eng-review` | Architecture, code quality, tests, performance review of a plan. Scope challenge, ASCII coverage diagrams, interactive section-by-section walkthrough. |
 
 ### Review + Test
 | Command | What it does |
 |---------|-------------|
-| `/review` | Pre-landing diff review. SQL safety, race conditions, LLM trust boundaries, shell injection, enum completeness + testing, maintainability, API contracts, data migration checks. Fix-first: auto-fixes mechanical issues, asks about ambiguous ones. |
-| `/secure` | OWASP Top 10 + STRIDE threat model. Attack surface census, secrets archaeology, dependency supply chain, CI/CD pipeline, webhook audit, LLM security. Confidence-gated with false positive filtering. |
-| `/perf` | Performance-focused review. N+1 queries, missing indexes, algorithmic complexity, bundle size, rendering performance, missing pagination, async blocking. |
+| `/sl-review` | Pre-landing diff review. SQL safety, race conditions, LLM trust boundaries, shell injection, enum completeness + testing, maintainability, API contracts, data migration checks. Fix-first: auto-fixes mechanical issues, asks about ambiguous ones. |
+| `/sl-secure` | OWASP Top 10 + STRIDE threat model. Attack surface census, secrets archaeology, dependency supply chain, CI/CD pipeline, webhook audit, LLM security. Confidence-gated with false positive filtering. |
+| `/sl-perf` | Performance-focused review. N+1 queries, missing indexes, algorithmic complexity, bundle size, rendering performance, missing pagination, async blocking. |
 
 ### Ship + Reflect
 | Command | What it does |
 |---------|-------------|
-| `/ship` | Merge base, run tests, coverage audit, pre-landing review, commit, push, create PR. One command from "done coding" to "PR open." |
-| `/investigate` | Systematic root-cause debugging. Iron law: no fixes without investigation. 5-phase workflow with 3-strike escalation rule. |
-| `/retro` | Weekly retrospective from git history. Metrics, session detection, commit patterns, hotspot analysis, per-author deep dives, shipping velocity. |
-| `/doc` | Auto-update all docs after shipping. Cross-references diff against every .md file, fixes factual drift, polishes CHANGELOG voice. |
+| `/sl-ship` | Merge base, run tests, coverage audit, pre-landing review, commit, push, create PR. One command from "done coding" to "PR open." |
+| `/sl-investigate` | Systematic root-cause debugging. Iron law: no fixes without investigation. 5-phase workflow with 3-strike escalation rule. |
+| `/sl-retro` | Weekly retrospective from git history. Metrics, session detection, commit patterns, hotspot analysis, per-author deep dives, shipping velocity. |
+| `/sl-doc` | Auto-update all docs after shipping. Cross-references diff against every .md file, fixes factual drift, polishes CHANGELOG voice. |
 
 ## The Sprint
 
 stacklite follows a natural process. Each command suggests the next one when it finishes:
 
 ```
-/plan → /eng-review → [build] → /review + /secure + /perf → /ship → /doc → /retro
-  ↑                                                                            │
-  └────────────────────────────────────────────────────────────────────────────┘
+/sl-plan → /sl-eng-review → [build] → /sl-review + /sl-secure + /sl-perf → /sl-ship → /sl-doc → /sl-retro
+   ↑                                                                                                │
+   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Each command feeds the next. `/plan` produces a design doc that `/eng-review` reviews. `/review` catches bugs that `/ship` verifies are fixed. `/doc` updates what `/ship` changed. `/retro` reflects on what was shipped and suggests what to `/plan` next.
+Each command feeds the next. `/sl-plan` produces a design doc that `/sl-eng-review` reviews. `/sl-review` catches bugs that `/sl-ship` verifies are fixed. `/sl-doc` updates what `/sl-ship` changed. `/sl-retro` reflects on what was shipped and suggests what to `/sl-plan` next.
 
 ## What's included vs gstack
 
@@ -97,7 +97,7 @@ Each command feeds the next. `/plan` produces a design doc that `/eng-review` re
 - Confidence calibration (1-10 on every finding)
 - Scope drift detection
 - OWASP Top 10 + STRIDE threat model with 22 false-positive exclusion rules
-- 7 specialist domains (testing, maintainability, security, performance, API contracts, data migration, red team) inlined into /review
+- 7 specialist domains (testing, maintainability, security, performance, API contracts, data migration, red team) inlined into /sl-review
 - Six forcing questions for product thinking
 - Systematic debugging with 3-strike escalation
 - Full ship automation (test, review, PR)
@@ -128,12 +128,18 @@ The canonical source for each command lives in `commands/`. The IDE-specific cop
    - `targets/cursor/.cursor/rules/` (has `description` + `alwaysApply` frontmatter)
    - `targets/windsurf/.windsurf/rules/` (has `trigger` + `description` frontmatter)
 
+All command files use the `sl-` prefix (e.g., `sl-plan.md`, `sl-review.md`).
+
+## Upgrading from v2
+
+v3 renamed all commands with an `sl-` prefix to avoid clashing with IDE built-in commands (e.g., Claude Code's `/plan` mode). Delete the old command files from your project and re-copy from the matching target folder.
+
 ## Customise
 
 These are plain markdown files. Edit them for your team:
-- Add framework-specific checks to `/review`
-- Adjust test coverage expectations in `/eng-review`
-- Add your own forcing questions to `/plan`
+- Add framework-specific checks to `/sl-review`
+- Adjust test coverage expectations in `/sl-eng-review`
+- Add your own forcing questions to `/sl-plan`
 - Change engineering preferences to match your style
 
 ## Optional: routing rules (Claude Code)
