@@ -119,3 +119,7 @@ Status:          DONE | DONE_WITH_CONCERNS | BLOCKED
 - Never apply a fix you cannot verify.
 - Never say "this should fix it." Verify and prove it.
 - If fix touches >5 files → ask about blast radius.
+
+## Next Step
+
+Standalone command. After investigating, run `/review` and `/ship` if you made code changes, or start fresh with `/plan` if the investigation revealed a bigger problem.
