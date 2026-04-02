@@ -214,3 +214,7 @@ NEEDS INPUT:
 ```
 
 Do not commit, push, or create PRs — that's `/ship`.
+
+## Next Step
+
+Run `/ship` to push and create a PR. Or run `/secure` and `/perf` for deeper security and performance checks before shipping.

@@ -157,3 +157,7 @@ Findings: X total (Y critical, Z high, W medium)
 Verified: N findings actively confirmed
 Next steps: [prioritized remediation order]
 ```
+
+## Next Step
+
+Run `/ship` when security findings are resolved. Or run `/perf` if performance hasn't been reviewed yet.
