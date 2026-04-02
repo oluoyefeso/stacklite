@@ -98,3 +98,7 @@ Branch: feature → main
 
 Summary: X findings (Y auto-fixed, Z need input)
 ```
+
+## Next Step
+
+Run `/ship` when performance issues are resolved. Or run `/secure` if security hasn't been reviewed yet.
