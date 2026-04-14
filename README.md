@@ -1,6 +1,6 @@
 # stacklite
 
-The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Nine commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect — as plain markdown files for your AI coding IDE.
+The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Ten commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect, upgrade — as plain markdown files for your AI coding IDE.
 
 No binaries. No runtime. No telemetry. Just markdown.
 
@@ -74,6 +74,7 @@ cp -r /tmp/stacklite/targets/windsurf/.windsurf .
 | `/sl-investigate` | Systematic root-cause debugging. Iron law: no fixes without investigation. 5-phase workflow with 3-strike escalation rule. |
 | `/sl-retro` | Weekly retrospective from git history. Metrics, session detection, commit patterns, hotspot analysis, per-author deep dives, shipping velocity. |
 | `/sl-doc` | Auto-update all docs after shipping. Cross-references diff against every .md file, fixes factual drift, polishes CHANGELOG voice. |
+| `/sl-upgrade` | Upgrade stacklite to the latest version. Detects your IDE, downloads fresh copies from GitHub, shows what changed. |
 
 ## The Sprint
 
