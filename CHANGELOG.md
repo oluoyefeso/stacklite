@@ -10,6 +10,7 @@ Synced review intelligence improvements from gstack v0.15–v0.16.
 - **Adversarial review pass** in `/sl-review` (Step 6). After the structured review, a fresh pass asks "what's the worst thing that happens in production?" — focusing on blast radius, concurrency, boundary conditions, and integration breakage.
 - **Plan completion audit** in `/sl-ship` (Step 5). Auto-discovers plan/design doc files, extracts actionable items, compares against the diff, and gates shipping on completion. Prevents shipping code that doesn't match what was planned.
 - **Plan completion section** in `/sl-ship` PR body template.
+- **`/sl-upgrade` command.** One command to upgrade stacklite to the latest version. Detects your IDE, downloads fresh files from GitHub, removes stale commands from prior versions, and shows what changed.
 
 ### Changed
 
