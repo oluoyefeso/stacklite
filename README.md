@@ -1,6 +1,6 @@
 # stacklite
 
-The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Nine commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect — as plain markdown files for your AI coding IDE.
+The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Ten commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect, upgrade — as plain markdown files for your AI coding IDE.
 
 No binaries. No runtime. No telemetry. Just markdown.
 
