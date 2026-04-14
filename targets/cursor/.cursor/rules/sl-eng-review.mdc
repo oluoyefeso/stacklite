@@ -2,7 +2,6 @@
 description: "Engineering plan review — use when asked to review architecture, test coverage, code quality, or lock in a technical plan"
 alwaysApply: false
 ---
-
 # Engineering Plan Review
 
 Review this plan/feature thoroughly before any code is written. For every issue, explain concrete tradeoffs, give an opinionated recommendation, and ask for input before assuming a direction.
@@ -147,6 +146,10 @@ Tests:         Coverage X% → Y% (Z gaps remain)
 Performance:   X issues found, Y resolved
 STATUS: CLEARED / NOT CLEARED
 ```
+
+## Anti-Skip Rule
+
+Never condense, abbreviate, or skip any review section (1-4) regardless of plan type (strategy, spec, code, infra). Every section exists for a reason. "This is a strategy doc so implementation sections don't apply" is always wrong — implementation details are where strategy breaks down. If a section genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
 
 ## Next Step
 

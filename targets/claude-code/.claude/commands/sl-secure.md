@@ -153,6 +153,10 @@ Verified: N findings actively confirmed
 Next steps: [prioritized remediation order]
 ```
 
+## Anti-Skip Rule
+
+Never condense, abbreviate, or skip any audit phase (0-10) regardless of project type or stack. Every phase exists for a reason. If a phase genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
+
 ## Next Step
 
 Run `/sl-ship` when security findings are resolved. Or run `/sl-perf` if performance hasn't been reviewed yet.

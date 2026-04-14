@@ -2,7 +2,6 @@
 mode: "agent"
 description: "Performance-focused code review"
 ---
-
 # Performance Review
 
 Analyze the current branch's diff for performance issues. Focus on problems that won't be caught by tests but will degrade user experience in production.
@@ -103,6 +102,10 @@ Branch: feature → main
 
 Summary: X findings (Y auto-fixed, Z need input)
 ```
+
+## Anti-Skip Rule
+
+Never condense, abbreviate, or skip any performance category regardless of diff size or project type. Every category exists for a reason. If a category genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
 
 ## Next Step
 

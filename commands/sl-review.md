@@ -196,6 +196,20 @@ RECOMMENDATION: Fix both — #1 is real, #2 prevents silent corruption.
 - "Regex doesn't handle X" when input is constrained
 - Anything already addressed in the diff
 
+## Step 6: Adversarial Pass
+
+After the structured review, do a fresh pass with a different lens. Forget the checklist — think like an attacker, a tired oncall engineer, or a user who does the unexpected.
+
+Ask:
+1. **What's the worst thing that happens if this code runs in production?** Trace the blast radius.
+2. **What breaks under concurrent access?** Two users, two tabs, two deploys.
+3. **What happens at the boundaries?** Empty input, max input, nil where you don't expect it, slow network.
+4. **What adjacent code breaks?** The diff might be correct in isolation but break callers, consumers, or downstream systems. Check the integration surface.
+
+If this pass finds issues the structured review missed, add them to the findings with `[ADVERSARIAL]` prefix.
+
+If nothing new: "Adversarial pass: no additional findings."
+
 ## Output
 ```
 Pre-Landing Review: N issues (X critical, Y informational)
@@ -209,6 +223,10 @@ NEEDS INPUT:
 ```
 
 Do not commit, push, or create PRs — that's `/sl-ship`.
+
+## Anti-Skip Rule
+
+Never condense, abbreviate, or skip any review pass (1-3) or the adversarial pass regardless of diff size or type. Every pass exists for a reason. If a pass genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
 
 ## Next Step
 
