@@ -2,7 +2,6 @@
 mode: "agent"
 description: "Test, review, commit, push, and create PR"
 ---
-
 # Ship — Test, Review, and Open PR
 
 Fully automated ship workflow. Run straight through and output the PR URL at the end.
@@ -86,7 +85,66 @@ Coverage: 2/3 changed files have tests (67%)
 
 If coverage gaps exist for new code: generate the missing test files. Run them. If they pass, include them.
 
-## Step 5: Pre-Landing Review
+## Step 5: Plan Completion Audit
+
+Check whether the shipped code matches a plan file, if one exists.
+
+### Discovery
+
+Look for a plan or design doc related to this branch:
+
+```bash
+BRANCH=$(git branch --show-current 2>/dev/null | tr '/' '-')
+# Search common plan file locations
+for PLAN_DIR in ".claude/plans" ".github/plans" "docs/plans" "."; do
+  [ -d "$PLAN_DIR" ] || continue
+  PLAN=$(ls -t "$PLAN_DIR"/*.md 2>/dev/null | xargs grep -l "$BRANCH" 2>/dev/null | head -1)
+  [ -n "$PLAN" ] && break
+done
+# Also check for design docs with branch name in title
+[ -z "$PLAN" ] && PLAN=$(find . -maxdepth 2 -name "*design*" -name "*.md" -newer "$(git merge-base HEAD origin/$BASE)" 2>/dev/null | head -1)
+[ -n "$PLAN" ] && echo "PLAN_FILE: $PLAN" || echo "NO_PLAN_FILE"
+```
+
+**No plan file found:** Skip with "No plan file detected — skipping." Continue to Step 6.
+
+### Audit
+
+If a plan file was found:
+
+1. Read it. Extract every actionable item (checkbox items, numbered steps, imperative statements like "Add X", "Create Y", file specifications). Exclude: section headers, commentary, questions, explicitly deferred items ("Future:", "Out of scope:", "P2+").
+2. For each item, check the diff: does the code address it?
+3. Classify each as: **DONE** (addressed in diff), **PARTIAL** (started but incomplete), **NOT DONE** (no matching changes).
+
+```
+PLAN COMPLETION AUDIT
+═══════════════════════════════
+Plan: {plan file path}
+
+  [DONE]      Create UserService — src/services/user_service.rb (+142 lines)
+  [PARTIAL]   Add validation — model validates but missing controller checks
+  [NOT DONE]  Add caching layer — no cache-related changes in diff
+
+Completion: 4/6 items (67%)
+```
+
+### Gate
+
+- **All DONE:** Pass. Continue.
+- **Only PARTIAL items (no NOT DONE):** Continue with a note in the PR body.
+- **Any NOT DONE items:** Ask:
+  ```
+  {N} items from the plan are NOT DONE:
+  - {list}
+
+  A) Stop — implement the missing items before shipping
+  B) Ship anyway — defer these to a follow-up
+  C) These items were intentionally dropped
+  ```
+
+Include a `## Plan Completion` section in the PR body (Step 8).
+
+## Step 6: Pre-Landing Review
 
 Run the core review checklist against the diff (same as `/sl-review` but abbreviated):
 
@@ -96,7 +154,7 @@ Run the core review checklist against the diff (same as `/sl-review` but abbrevi
 
 Output: `Pre-Landing Review: N issues (X auto-fixed, Y need input)`
 
-## Step 6: Commit
+## Step 7: Commit
 
 Split changes into bisectable commits where logical. Each commit = one logical change.
 
@@ -107,7 +165,7 @@ git commit -m "<type>: <summary>"
 
 Use conventional commit prefixes: feat, fix, refactor, test, chore, docs.
 
-## Step 7: Push
+## Step 8: Push
 
 ```bash
 git fetch origin "$BRANCH" 2>/dev/null
@@ -116,7 +174,7 @@ REMOTE=$(git rev-parse "origin/$BRANCH" 2>/dev/null || echo "none")
 [ "$LOCAL" = "$REMOTE" ] && echo "Already pushed" || git push -u origin "$BRANCH"
 ```
 
-## Step 8: Create PR
+## Step 9: Create PR
 
 Check if PR exists:
 ```bash
@@ -130,11 +188,14 @@ PR body:
 ## Summary
 <Summarize all changes. Group into logical sections.>
 
+## Plan Completion
+<If plan file found: completion checklist from Step 5. If none: "No plan file detected.">
+
 ## Test Coverage
 <coverage diagram from Step 4>
 
 ## Pre-Landing Review
-<findings from Step 5>
+<findings from Step 6>
 
 ## Test Plan
 - [x] All tests pass (N tests, 0 failures)
@@ -150,7 +211,7 @@ If `gh` unavailable: print branch name, remote URL, instruct user to create PR m
 
 **Output the PR URL.**
 
-## Step 9: Update Docs
+## Step 10: Update Docs
 
 After PR creation, scan all .md files in the project. Cross-reference against the diff. Auto-update factual changes (paths, counts, feature lists). Ask about narrative changes.
 
