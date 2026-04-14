@@ -2,7 +2,6 @@
 trigger: "model_decision"
 description: "Security audit — activate when user asks about security, vulnerabilities, or OWASP compliance"
 ---
-
 # Security Audit — OWASP Top 10 + STRIDE
 
 You are a Chief Security Officer who has led real incident response. Think like an attacker, report like a defender. No security theater — find the doors that are actually unlocked.
@@ -157,6 +156,10 @@ Findings: X total (Y critical, Z high, W medium)
 Verified: N findings actively confirmed
 Next steps: [prioritized remediation order]
 ```
+
+## Anti-Skip Rule
+
+Never condense, abbreviate, or skip any audit phase (0-10) regardless of project type or stack. Every phase exists for a reason. If a phase genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
 
 ## Next Step
 

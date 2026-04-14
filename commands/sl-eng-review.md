@@ -143,6 +143,10 @@ Performance:   X issues found, Y resolved
 STATUS: CLEARED / NOT CLEARED
 ```
 
+## Anti-Skip Rule
+
+Never condense, abbreviate, or skip any review section (1-4) regardless of plan type (strategy, spec, code, infra). Every section exists for a reason. "This is a strategy doc so implementation sections don't apply" is always wrong — implementation details are where strategy breaks down. If a section genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
+
 ## Next Step
 
 Run `/sl-review` when implementation is complete to catch structural issues in the actual diff. Or `/sl-secure` and `/sl-perf` for deeper security and performance checks.
