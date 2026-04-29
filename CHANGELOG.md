@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.2.0] - 2026-04-29
+
+Synced review intelligence improvements from gstack v0.18–v1.10.
+
+### Added
+
+- **Decision-brief format** for AskUserQuestion across `/sl-plan`, `/sl-eng-review`, and `/sl-review`. Every user-facing choice now uses a structured D-numbered brief: ELI10, Stakes, Recommendation, Completeness, Pros/Cons with ✅/❌ markers, and a closing Net synthesis line. Fixes the most common failure mode on Opus 4.7 — terse multi-option questions with no recommendation.
+- **RECOMMENDATION-always rule.** Recommendation is mandatory on every question, including taste calls (where it's labelled as such). Stops the model from dropping the rec line under load.
+- **Coverage-vs-kind Completeness rule.** Completeness scores (X/10) only when options differ in coverage. When options differ in kind (mode A vs mode B, architecture A vs architecture B), emit the kind-note instead of fabricating filler scores.
+- **"You are NOT done after Push" guardrail** in `/sl-ship` Step 8. Push was the natural stopping point where doc-sync got skipped most often.
+
+### Changed
+
+- `/sl-ship` step order: docs sync (was Step 10) now runs as Step 9 BEFORE PR creation (now Step 10). The PR body is created once with the `## Documentation` section baked in — no create-then-edit dance.
+
 ## [3.1.0] - 2026-04-14
 
 Synced review intelligence improvements from gstack v0.15–v0.16.
