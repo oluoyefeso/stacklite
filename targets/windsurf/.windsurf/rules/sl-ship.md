@@ -2,6 +2,7 @@
 trigger: "model_decision"
 description: "Ship workflow — activate when user asks to ship, deploy, push, or create a PR"
 ---
+
 # Ship — Test, Review, and Open PR
 
 Fully automated ship workflow. Run straight through and output the PR URL at the end.
@@ -142,7 +143,7 @@ Completion: 4/6 items (67%)
   C) These items were intentionally dropped
   ```
 
-Include a `## Plan Completion` section in the PR body (Step 8).
+Include a `## Plan Completion` section in the PR body (Step 10).
 
 ## Step 6: Pre-Landing Review
 
@@ -174,14 +175,30 @@ REMOTE=$(git rev-parse "origin/$BRANCH" 2>/dev/null || echo "none")
 [ "$LOCAL" = "$REMOTE" ] && echo "Already pushed" || git push -u origin "$BRANCH"
 ```
 
-## Step 9: Create PR
+> **You are NOT done.** Push is the natural stopping point — and the place doc-sync gets skipped most often. Steps 9 and 10 still run on every invocation. Do not summarize or hand back to the user until Step 10 outputs the PR URL.
+
+## Step 9: Update Docs
+
+Run BEFORE creating the PR so the PR body reflects what shipped.
+
+Scan all `.md` files in the project (README, CHANGELOG, ARCHITECTURE, CONTRIBUTING, CLAUDE.md, docs/). Cross-reference each against `git diff origin/$BASE...HEAD`. Auto-update factual changes (paths, counts, feature lists, command names, version-specific instructions). Ask about narrative changes using the same decision-brief format as `/sl-review`.
+
+If any docs updated:
+```bash
+git add -A && git commit -m "docs: sync with shipped changes"
+git push
+```
+
+Capture the list of updated docs as `DOCS_UPDATED` for Step 10 (e.g. `README.md, CHANGELOG.md`). If nothing changed, set `DOCS_UPDATED="none — no factual drift"`.
+
+## Step 10: Create PR
 
 Check if PR exists:
 ```bash
 gh pr view --json url,state -q '.url' 2>/dev/null || echo "NO_PR"
 ```
 
-If PR exists: update body with latest results. If no PR: create one.
+If PR exists: update body with latest results (including `DOCS_UPDATED`). If no PR: create one with the docs section baked in from the start — no create-then-edit dance.
 
 PR body:
 ```
@@ -197,6 +214,9 @@ PR body:
 ## Pre-Landing Review
 <findings from Step 6>
 
+## Documentation
+<DOCS_UPDATED from Step 9>
+
 ## Test Plan
 - [x] All tests pass (N tests, 0 failures)
 
@@ -211,15 +231,6 @@ If `gh` unavailable: print branch name, remote URL, instruct user to create PR m
 
 **Output the PR URL.**
 
-## Step 10: Update Docs
-
-After PR creation, scan all .md files in the project. Cross-reference against the diff. Auto-update factual changes (paths, counts, feature lists). Ask about narrative changes.
-
-If any docs updated:
-```bash
-git add -A && git commit -m "docs: sync with shipped changes" && git push
-```
-
 ## Rules
 - Never skip tests. If tests fail, stop.
 - Never force push.
@@ -228,4 +239,4 @@ git add -A && git commit -m "docs: sync with shipped changes" && git push
 
 ## Next Step
 
-Run `/sl-doc` to update documentation after shipping. Then `/sl-retro` at the end of the week to reflect on what was shipped.
+`/sl-doc` covers deeper narrative doc updates if needed beyond Step 9's factual sync. Then `/sl-retro` at the end of the week to reflect on what was shipped.

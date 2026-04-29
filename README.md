@@ -70,7 +70,7 @@ cp -r /tmp/stacklite/targets/windsurf/.windsurf .
 ### Ship + Reflect
 | Command | What it does |
 |---------|-------------|
-| `/sl-ship` | Merge base, run tests, coverage audit, pre-landing review, commit, push, create PR. One command from "done coding" to "PR open." |
+| `/sl-ship` | Merge base, run tests, coverage audit, pre-landing review, commit, push, sync docs, create PR. One command from "done coding" to "PR open." |
 | `/sl-investigate` | Systematic root-cause debugging. Iron law: no fixes without investigation. 5-phase workflow with 3-strike escalation rule. |
 | `/sl-retro` | Weekly retrospective from git history. Metrics, session detection, commit patterns, hotspot analysis, per-author deep dives, shipping velocity. |
 | `/sl-doc` | Auto-update all docs after shipping. Cross-references diff against every .md file, fixes factual drift, polishes CHANGELOG voice. |

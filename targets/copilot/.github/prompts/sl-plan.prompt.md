@@ -129,14 +129,49 @@ If the user disagrees with a premise, revise understanding and loop back.
 
 ---
 
+## Decision Format
+
+Every time you ask the user to choose between options (in any phase), format the question as a decision brief:
+
+```
+D<N>: <one-line title>
+ELI10: <plain English a 16-year-old could follow, 2-4 sentences naming stakes>
+Stakes if we pick wrong: <one sentence: what breaks, what's lost>
+Recommendation: <choice> because <one-line reason>
+Completeness: A=X/10, B=Y/10  (or: Note: options differ in kind, not coverage — no completeness score)
+
+A) <option label> (recommended)
+   ✅ <pro — concrete, ≥40 chars>
+   ✅ <pro>
+   ❌ <con — honest, ≥40 chars>
+B) <option label>
+   ✅ <pro>
+   ❌ <con>
+
+Net: <one-line synthesis of the actual tradeoff>
+```
+
+Rules:
+- **Recommendation is ALWAYS present.** For taste calls write `Recommendation: <default> — taste call, no strong preference`. Keep `(recommended)` on one option even for neutral posture.
+- **Completeness scores ONLY when options differ in coverage** (10 = complete, 7 = happy path, 3 = shortcut). When options differ in kind (mode A vs mode B, architecture A vs architecture B, cherry-pick selections), write the kind-note instead. Do not fabricate scores.
+- **Each option needs ≥2 ✅ and ≥1 ❌**, each ≥40 chars. Hard-stop confirmations may use `✅ No cons — this is a hard-stop choice`.
+- **Number questions D1, D2, D3...** within a single skill invocation.
+- Ask one decision at a time unless the user explicitly asks to batch.
+
+Self-check before asking: D-number, ELI10, Stakes, Recommendation, Completeness-or-kind-note, ≥2✅+≥1❌ per option, `(recommended)` label, Net line.
+
+---
+
 ## Phase 4: Scope Mode Selection
 
-Ask the user which mode to operate in:
+Ask the user which mode to operate in. This is a **kind-differentiated** decision (no completeness score):
 
 - **EXPANSION:** Envision the platonic ideal. Push scope UP. "What would make this 10x better for 2x the effort?" Every expansion is the user's decision.
 - **SELECTIVE EXPANSION:** Hold current scope as baseline, but surface every expansion opportunity individually. User cherry-picks.
 - **HOLD SCOPE:** Make the plan bulletproof. Catch every failure mode, test every edge case. Do not expand or reduce.
 - **REDUCTION:** Find the minimum viable version. Cut everything else. Be ruthless.
+
+Use the Decision Format above with `Note: options differ in kind, not coverage — no completeness score.`
 
 ### Prime Directives (all modes)
 1. Zero silent failures. Every failure mode must be visible.
@@ -150,27 +185,20 @@ Ask the user which mode to operate in:
 
 ## Phase 5: Alternatives Generation
 
-Generate 2-3 implementation approaches:
+Generate 2-3 implementation approaches. Approaches are **coverage-differentiated** (use Completeness scores):
 
+- One must be the **minimal viable** (fewest files, ships fastest) — likely 3–5/10 on completeness.
+- One must be the **ideal architecture** (best long-term) — likely 9–10/10 on completeness.
+- One can be **creative/lateral** (unexpected approach).
+
+For each approach, capture:
 ```
 APPROACH A: [Name]
   What:   [2-3 sentences]
-  Pros:   [2-3 bullets]
-  Cons:   [2-3 bullets]
   Reuses: [existing code/patterns]
-
-APPROACH B: [Name]
-  ...
 ```
 
-Rules:
-- One must be the **minimal viable** (fewest files, ships fastest).
-- One must be the **ideal architecture** (best long-term).
-- One can be **creative/lateral** (unexpected approach).
-
-**RECOMMENDATION:** Choose [X] because [one-line reason].
-
-Ask the user to approve before proceeding.
+Then present the choice using the Decision Format above. Recommendation is mandatory. Ask the user to approve before proceeding.
 
 ---
 
