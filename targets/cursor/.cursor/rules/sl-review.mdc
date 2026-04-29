@@ -2,6 +2,7 @@
 description: "Pre-landing code review — use when asked to review a diff, check code before merging, or do a code review"
 alwaysApply: false
 ---
+
 # Pre-Landing Code Review
 
 Analyze the current branch's diff against the base branch for structural issues that tests don't catch. Fix what's obvious, ask about what's ambiguous.
@@ -173,18 +174,36 @@ Rule of thumb: mechanical fix a senior eng wouldn't discuss = AUTO-FIX. Reasonab
 ### Apply AUTO-FIX items directly.
 `[AUTO-FIXED] [file:line] Problem → what you did`
 
-### Batch ASK items into one question.
+### Batch ASK items as decision briefs.
+
+For each ASK item, format as a decision brief. Number them D1, D2, D3 across the whole review:
+
 ```
-I auto-fixed N issues. M need your input:
+I auto-fixed N issues. M need your input.
 
-1. [CRITICAL] file:line — Problem
-   Fix: ...  → A) Fix  B) Skip
+D1: <one-line title> (file:line)
+ELI10: <plain English a 16-year-old could follow, 2-4 sentences naming stakes>
+Stakes if we pick wrong: <what breaks in production, what users see>
+Recommendation: A) Fix because <one-line reason>
+Completeness: A=10/10, B=3/10  (or: Note: options differ in kind, not coverage — no completeness score)
 
-2. [INFORMATIONAL] file:line — Problem
-   Fix: ...  → A) Fix  B) Skip
+A) Fix (recommended)
+   ✅ <pro — concrete, ≥40 chars>
+   ✅ <pro>
+   ❌ <con — honest, ≥40 chars>
+B) Skip
+   ✅ <pro>
+   ❌ <con>
 
-RECOMMENDATION: Fix both — #1 is real, #2 prevents silent corruption.
+Net: <one-line synthesis of the actual tradeoff>
+
+D2: ...
 ```
+
+Rules:
+- **Recommendation is ALWAYS present.** Even for taste calls: `Recommendation: <default> — taste call, no strong preference`. Keep `(recommended)` on one option.
+- **Completeness scores ONLY when options differ in coverage** (Fix vs Skip is coverage-differentiated). When options differ in kind (Fix approach A vs Fix approach B), write the kind-note instead. Do not fabricate scores.
+- **Each option needs ≥2 ✅ and ≥1 ❌**, each ≥40 chars. Hard-stop confirmations may use `✅ No cons — this is a hard-stop choice`.
 
 ### Verification of Claims
 - "This pattern is safe" → cite the specific line

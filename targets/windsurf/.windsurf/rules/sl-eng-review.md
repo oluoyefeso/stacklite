@@ -2,6 +2,7 @@
 trigger: "model_decision"
 description: "Engineering plan review — activate when user asks to review architecture, tests, or technical plans"
 ---
+
 # Engineering Plan Review
 
 Review this plan/feature thoroughly before any code is written. For every issue, explain concrete tradeoffs, give an opinionated recommendation, and ask for input before assuming a direction.
@@ -40,9 +41,37 @@ If the complexity check triggers, recommend scope reduction — explain what's o
 
 **Once scope is agreed, commit fully.** Do not re-argue in later sections.
 
+## Decision Format
+
+When you raise an issue and need user input, format the question as a decision brief:
+
+```
+D<N>: <one-line title> (file:line)
+ELI10: <plain English a 16-year-old could follow, 2-4 sentences naming stakes>
+Stakes if we pick wrong: <what breaks in production, what users see>
+Recommendation: <choice> because <one-line reason>
+Completeness: A=X/10, B=Y/10  (or: Note: options differ in kind, not coverage — no completeness score)
+
+A) <option label> (recommended)
+   ✅ <pro — concrete, ≥40 chars>
+   ✅ <pro>
+   ❌ <con — honest, ≥40 chars>
+B) <option label>
+   ✅ <pro>
+   ❌ <con>
+
+Net: <one-line synthesis of the actual tradeoff>
+```
+
+Rules:
+- **Recommendation is ALWAYS present.** For taste calls: `Recommendation: <default> — taste call, no strong preference`. Keep `(recommended)` on one option.
+- **Completeness scores ONLY when options differ in coverage** (10 = complete, 7 = happy path, 3 = shortcut). When options differ in kind (architecture A vs architecture B, validation strategy A vs strategy B), write the kind-note instead. Do not fabricate scores.
+- **Each option needs ≥2 ✅ and ≥1 ❌**, each ≥40 chars.
+- **Number questions D1, D2, D3...** across the whole review.
+
 ## Review Sections
 
-Work through each section interactively. Present issues individually with options, recommendations, and reasoning. Proceed to next section only after all issues are resolved.
+Work through each section interactively. Present issues individually using the Decision Format above. Proceed to next section only after all issues are resolved.
 
 ### 1. Architecture Review
 Evaluate:
