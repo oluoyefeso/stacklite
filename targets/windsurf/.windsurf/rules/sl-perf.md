@@ -2,6 +2,7 @@
 trigger: "model_decision"
 description: "Performance review — activate when user asks about performance, optimization, or slow code"
 ---
+
 # Performance Review
 
 Analyze the current branch's diff for performance issues. Focus on problems that won't be caught by tests but will degrade user experience in production.
@@ -12,7 +13,9 @@ Analyze the current branch's diff for performance issues. Focus on problems that
 BRANCH=$(git branch --show-current)
 BASE=$(gh pr view --json baseRefName -q .baseRefName 2>/dev/null || echo "main")
 git fetch origin "$BASE" --quiet
-DIFF_LINES=$(git diff "origin/$BASE" --stat | tail -1 | grep -oE '[0-9]+ insertion' | grep -oE '[0-9]+' || echo "0")
+DIFF_BASE=$(git merge-base "origin/$BASE" HEAD)
+[ -z "$DIFF_BASE" ] && { echo "Could not resolve merge-base with origin/$BASE. Branch may be disjoint."; exit 1; }
+DIFF_LINES=$(git diff "$DIFF_BASE" --stat | tail -1 | grep -oE '[0-9]+ insertion' | grep -oE '[0-9]+' || echo "0")
 echo "Branch: $BRANCH  Base: $BASE  Diff: $DIFF_LINES lines"
 
 # Detect stack
@@ -26,10 +29,10 @@ echo "Branch: $BRANCH  Base: $BASE  Diff: $DIFF_LINES lines"
 ## Get the Diff
 
 ```bash
-git diff "origin/$BASE"
+git diff "$DIFF_BASE"
 ```
 
-Read the FULL diff. Only flag real problems in the changed code.
+Read the FULL diff. Only flag real problems in the changed code. `DIFF_BASE` (computed in Setup) excludes files merged into the base branch from other PRs after this branch diverged — focus on this branch's actual perf footprint, not the merge surface.
 
 ## Performance Categories
 

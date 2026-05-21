@@ -1,6 +1,6 @@
 # stacklite
 
-The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Ten commands covering the full sprint lifecycle — think, plan, build, review, test, ship, reflect, upgrade — as plain markdown files for your AI coding IDE.
+The review intelligence from [gstack](https://github.com/garrytan/gstack), zero dependencies. Eleven commands covering the full sprint lifecycle — think, plan, build, review, comment, test, ship, reflect, upgrade — as plain markdown files for your AI coding IDE.
 
 No binaries. No runtime. No telemetry. Just markdown.
 
@@ -64,6 +64,7 @@ cp -r /tmp/stacklite/targets/windsurf/.windsurf .
 | Command | What it does |
 |---------|-------------|
 | `/sl-review` | Pre-landing diff review. SQL safety, race conditions, LLM trust boundaries, shell injection, enum completeness + testing, maintainability, API contracts, data migration checks. Fix-first: auto-fixes mechanical issues, asks about ambiguous ones. |
+| `/sl-pr-comments` | Generate PR-ready review comments. Same checklist as `/sl-review`, but read-only — emits markdown you can post via `gh pr review --comment` (or pass `--post` to do it automatically). Accepts a branch name so you can review without checking out. |
 | `/sl-secure` | OWASP Top 10 + STRIDE threat model. Attack surface census, secrets archaeology, dependency supply chain, CI/CD pipeline, webhook audit, LLM security. Confidence-gated with false positive filtering. |
 | `/sl-perf` | Performance-focused review. N+1 queries, missing indexes, algorithmic complexity, bundle size, rendering performance, missing pagination, async blocking. |
 
@@ -82,11 +83,12 @@ stacklite follows a natural process. Each command suggests the next one when it 
 
 ```
 /sl-plan → /sl-eng-review → [build] → /sl-review + /sl-secure + /sl-perf → /sl-ship → /sl-doc → /sl-retro
-   ↑                                                                                                │
-   └────────────────────────────────────────────────────────────────────────────────────────────────┘
+   ↑                                          │                                                  │
+   │                                          └─ /sl-pr-comments (read-only, post to PR) ─┐      │
+   └──────────────────────────────────────────────────────────────────────────────────────┴──────┘
 ```
 
-Each command feeds the next. `/sl-plan` produces a design doc that `/sl-eng-review` reviews. `/sl-review` catches bugs that `/sl-ship` verifies are fixed. `/sl-doc` updates what `/sl-ship` changed. `/sl-retro` reflects on what was shipped and suggests what to `/sl-plan` next.
+Each command feeds the next. `/sl-plan` produces a design doc that `/sl-eng-review` reviews. `/sl-review` catches bugs that `/sl-ship` verifies are fixed. `/sl-pr-comments` runs the same checklist as `/sl-review` but emits PR-ready markdown — use it when the PR is already open and you want to leave inline feedback instead of fixing in-place. `/sl-doc` updates what `/sl-ship` changed. `/sl-retro` reflects on what was shipped and suggests what to `/sl-plan` next.
 
 ## What's included vs gstack
 
