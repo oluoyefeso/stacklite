@@ -17,10 +17,14 @@ If on the base branch: "Nothing to review." Stop.
 
 ```bash
 git fetch origin "$BASE" --quiet
-git diff "origin/$BASE" --stat
+DIFF_BASE=$(git merge-base "origin/$BASE" HEAD)
+[ -z "$DIFF_BASE" ] && { echo "Could not resolve merge-base with origin/$BASE. Branch may be disjoint."; exit 1; }
+git diff "$DIFF_BASE" --stat
 ```
 
 If no diff: "No changes against $BASE." Stop.
+
+**Why `git merge-base` and not `git diff origin/$BASE`:** the two-dot form shows files that differ between branch tips, which includes PRs merged into main *since this branch diverged*. Diffing from the merge-base shows only what this branch actually added.
 
 ## Step 2: Scope Drift Detection
 
@@ -45,10 +49,12 @@ Informational — proceed regardless.
 
 ```bash
 git fetch origin "$BASE" --quiet
-git diff "origin/$BASE"
+DIFF_BASE=$(git merge-base "origin/$BASE" HEAD)
+[ -z "$DIFF_BASE" ] && { echo "Could not resolve merge-base with origin/$BASE. Branch may be disjoint."; exit 1; }
+git diff "$DIFF_BASE"
 ```
 
-Read the FULL diff before commenting. Do not flag issues already addressed in the diff.
+Read the FULL diff before commenting. Do not flag issues already addressed in the diff. `DIFF_BASE` excludes files merged into the base branch from other PRs after this branch diverged — focus on the actual changes going in.
 
 ## Step 4: Critical Pass
 
