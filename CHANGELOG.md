@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.3.0] - 2026-05-21
+
+Fixes the merge-from-main muddling on every review command and adds `/sl-pr-comments` for posting review-quality feedback on PRs. Synced from gstack v1.40 (PR #1492 / issue #1152).
+
+### Added
+
+- **`/sl-pr-comments` command.** Read-only PR review that produces markdown you can post via `gh pr review --comment --body` (or pass `--post` to do it automatically). Same checklist as `/sl-review` (critical, informational, specialist domains, adversarial), but emits flat findings grouped by severity instead of running the interactive auto-fix flow. Accepts a branch arg so you can review a branch without checking out — useful for reviewing teammates' work or self-review on a clean current branch.
+- **Large-diff warning in `/sl-pr-comments`.** When the diff exceeds 500 lines or 30 files, the output prepends a note suggesting scope-reduction; the review still runs.
+- **Cross-branch NOTE in `/sl-pr-comments`.** When the target branch is different from the current branch, specialist passes that read files outside the diff (enum completeness, etc.) are limited — the output makes this visible to the reviewer.
+
+### Changed
+
+- **Merge-base diff scope across `/sl-review` and `/sl-perf`.** All `git diff origin/$BASE` (two-dot) sites now use `DIFF_BASE=$(git merge-base "origin/$BASE" HEAD)` + `git diff "$DIFF_BASE"`. Two-dot diff included files merged into the base from *other* PRs after this branch diverged — the model was reviewing other people's changes as if they were yours. The merge-base form shows only what this branch actually added. Same fix gstack landed in v1.40.
+- **Disjoint-history guard.** Every merge-base computation includes `[ -z "$DIFF_BASE" ] && { echo "Could not resolve merge-base..."; exit 1; }`. Prevents `git diff ""` undefined behavior on fresh repos or detached HEAD.
+- **Routing rules.** `CLAUDE.md.example` now lists `/sl-pr-comments` so Claude Code suggests it when the user asks to leave comments on a PR.
+
+### Verification recipe
+
+If you touch the diff-scope code in the future, verify with:
+1. **Behind-main**: branch off old main, let main move forward, run `/sl-review` → should NOT mention files only changed in newer main commits.
+2. **Merged-main**: branch + `git merge origin/main` + change one file + `/sl-review` → output ~1 file's findings, not the merge surface.
+
 ## [3.2.0] - 2026-04-29
 
 Synced review intelligence improvements from gstack v0.18–v1.10.

@@ -7,6 +7,7 @@ Routing rules:
 - Product ideas, "is this worth building", brainstorming → `/sl-plan`
 - Architecture review, "lock in the plan" → `/sl-eng-review`
 - Code review, "check my diff", pre-landing review → `/sl-review`
+- Generate PR-ready review comments to leave on a PR → `/sl-pr-comments`
 - Security audit, "check for vulnerabilities" → `/sl-secure`
 - Performance review, "check for perf issues" → `/sl-perf`
 - Ship, deploy, push, create PR → `/sl-ship`
